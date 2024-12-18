@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>web music player</title>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: linear-gradient(120deg, #9795f0 0%, #fbc8d4 100%);
+}
+body.background {
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+input[type=radio] {
+  display: none;
+}
+
+.card {
+  position: absolute;
+  width: 60%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+}
+
+.shell {
+  width: 100%;
+  max-width: 800px;
+  max-height: 570px;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cards {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+
+}
+
+    #item-1:checked ~ .cards #song-1,
+    #item-2:checked ~ .cards #song-2,
+    #item-3:checked ~ .cards #song-3 {
+      transform: translatex(0) scale(1);
+      border-radius: 10px;
+      box-shadow: 0 2px 40px rgba(255, 255, 255, 0.8);
+      opacity: 1;
+      z-index: 1;
+    }
+
+    #item-1:checked ~ .cards #song-2,
+    #item-2:checked ~ .cards #song-3,
+    #item-3:checked ~ .cards #song-1 {
+      transform: translatex(50%) scale(0.8);
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    #item-1:checked ~ .cards #song-3,
+    #item-2:checked ~ .cards #song-1,
+    #item-3:checked ~ .cards #song-2 {
+      transform: translatex(-50%) scale(0.8);
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+.player {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 520px;
+  padding:20px;
+  margin-top: 50px;
+  box-shadow: 0px 2px 10px rgba(40, 40, 40, 0.5);
+}
+.title{
+  font:700 17px '';
+}
+.information {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  height: 42px;
+  overflow: hidden;
+}
+.info-area {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 50px;
+  transition: transform 0.4s ease-in;
+}
+.song-info {
+  width: calc(100% - 50px);
+  display: block;
+}
+.Subheading {
+  display: flex;
+  color: #8f868f;
+  font-size: 15px;
+}
+.time {
+  margin-left: auto;
+}
+
+.progress-bar {
+  height: 4px;
+  width: 100%;
+  background-color: #e9efff;
+}
+
+.progress {
+  display: block;
+  position: relative;
+  width: 60%;
+  height: 100%;
+  background-color: #2992dc;
+}
+
+#item-2:checked ~ .player #test {
+  transform: translateY(0);
+}
+
+#item-2:checked ~ .player #test {
+  transform: translateY(-42px);
+}
+
+#item-3:checked ~ .player #test {
+  transform: translateY(-84px);
+}
+    </style>
+</head>
+<body>
+     <div class="shell">
+        <input type="radio" name="music" id="item-1" checked>
+        <input type="radio" name="music" id="item-2">
+        <input type="radio" name="music" id="item-3">
+		
+      <div class="cards">
+        <label class="card" for="item-1" id="song-1">
+          <img src="celebrity1.jpg">
+        </label>
+        <label class="card" for="item-2" id="song-2">
+          <img src="shenyuanwai2.jpg" >
+        </label>
+        <label class="card" for="item-3" id="song-3">
+          <img src="oldspring.jpg">
+        </label>
+      </div>
+	
+<div style="width:1450px; margin:-10 auto; border:0px solid blue; position:relative;">
+	<div id='main'  style=" border:1px solid white; width:300px; height:160px; ">
+		<div style="border:1px solid white; width:300px; height:60px;">
+			<audio id="player" src="" autoplay controls>
+			</audio>
+		</div> 
+		<table style="border:2px solid white; width:100%; height:50px;">
+				<td style=" color:#FFFF99; text-align:center;" onClick="this.style.backgroundColor='#CCCCCC'" onMouseout="this.style.backgroundColor='#9795f0'" onDblClick="document.getElementById('player').src='Celebrity.mp3'">
+					Celebrity.mp3&nbsp;&nbsp;&nbsp;<a href="#" type="radio" name="sex" id="button1" onclick="show1()">View Lyrics</a>
+				</td>	</table>
+			<table style="border:2px solid white; width:100%; height:50px;">
+				<td style="color:#FFFF99;text-align:center;" onClick="this.style.backgroundColor='#CCCCCC'"  onMouseout="this.style.backgroundColor='#9795f0'" onDblClick="document.getElementById('player').src='oldspring.mp3'">
+					Hometown Embraces Spring.mp3&nbsp;&nbsp;&nbsp;<a href="#" type="radio" name="sex" id="button1" onclick="show2()" >View Lyrics</a>
+				</td>	</table>
+			<table style="border:2px solid white; width:100%; height:50px;">
+				<td style="color:#FFFF99;text-align:center;" onClick="this.style.backgroundColor='#CCCCCC'"  onMouseout="this.style.backgroundColor='#9795f0'" onDblClick="document.getElementById('player').src='shenyuanwai.mp3'">
+					Outside Shen Garden.mp3&nbsp;&nbsp;&nbsp;<a href="#" type="radio" name="sex" id="button1" onclick="show3()" >View Lyrics</a>
+				</td>
+				</table>
+
+	</div>
+	
+	
+	<div id='words' style=" border:1px solid white; width:300px; height:161px; position:absolute; left:300px; top:0px; ">
+	<table style=" color:#66FFCC;border:2px solid white; width:100%; height:50px;">
+			<td style="text-align:center;"> Singer:IU<br>
+			Song Duration:3:15 </td>
+			
+			&nbsp;&nbsp;Tips:&nbsp;&nbsp;&nbsp;&nbsp;Tap image to switch covers
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Double-click song title to play
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click 'view lyrics' to read
+			<br />
+			<table style="border:2px solid white; width:100%; height:50px;">
+			<td style="color:#66FFCC;text-align:center;"> Singer: AYueYue<br>
+			Song Duration:3:38</td>
+			<table style="border:2px solid white; width:100%; height:50px;">
+			<td style="color:#66FFCC;text-align:center;"> Singer:AYueYue, Liger<br>
+			Song Duration:3:15 </td>
+			</table>
+	</div>
+	<div id='sords' style=" color:#CCFF00;border:1px solid white; width:850px; height:212px; position:absolute; left:600px; top:0px; ">
+<div style="display:none" id="div1" text align="center">
+<p>The corners of the world grew with a slightly stooped posture, those troubling,<br>
+unconventional people-their pace, their stance, their clothes. <br>
+The playlist playing on the other end of your earphones, even the music is obscure tracks. <br>
+You don't know, do you?Above your drooping head, the bright and radiant lights, <br>
+where are they shining toward? Even if you're a little slow, it's okay. <br>
+I hope you will eventually understand-The one and only, You are my celebrity. <br>
+Please don't forget the star you sketched with your left hand in the dim darkness. <br>
+Can you see it? That one-of-a-kind beauty is beyond words. You are my celebrity.<br>
+Your exhausted expression, like a power switch turned off, your heartbeat is too quiet.<br>
+The shining parts you have-your imagination and who you are-everything about you is just my taste.<br>
+</p>
+</div>
+<div style="display:none" id="div2"; text align="center">
+<br>
+<p> <p> Jiangnan dreams again of misty rain, the long river flows back to the homeland,<br>
+smoke rises and drifts across hundreds of rivers and thousands of miles.<br>
+I listen to the bamboo flute tune, the joy of life is within reach,<br>
+And the ancient memories flow through the ice river for a thousand years.<br>
+You lower your head, snow falls between your brows, I smooth my countless feelings,<br> 
+outside the curtain, frost cools the sound of the zither, in an instant,all past events fade away. <br>
+Jiangnan dreams again of misty rain, the long river flows back to the homeland,<br>
+smoke rises and drifts across hundreds of rivers and thousands of miles.</p>
+</div>
+<div style="display:none" id="div3" text align="center">
+<p> The flowers I left behind last time, take root and make the entire garden sprout. Will we meet again?<br>
+Who is laughing behind this wall? Let me scar, let me weather and fall to the ground.<br>
+Can I let go? Even if I bow to send her off, will we push the door open and embrace again?<br>
+The promises of mountains and rivers always come in dreams, longing is hard to fake,<br>
+yet it remains too mocking in my heart. In the center of the pond, <br>
+like when I was once in your arms, too many springs and autumns apart, we can't embrace anymore.<br>
+The flowers haven't bloomed yet, but I see the sky turning red bit by bit.<br>
+I thought it was gone, but memories surge again, growing up makes it hard to learn composure.<br>
+There's always something to do, how can I be like a butterfly, so brave? <br>
+Can I let go? </p>
+</div>
+<script>
+function show1(){
+document.getElementById("div1").style.display="block";
+document.getElementById("div2").style.display="none";
+document.getElementById("div3").style.display="none";
+
+};
+function show2()
+{
+document.getElementById("div2").style.display="block";
+document.getElementById("div1").style.display="none";
+document.getElementById("div3").style.display="none";
+}
+function show3()
+{
+document.getElementById("div3").style.display="block";
+document.getElementById("div2").style.display="none";
+document.getElementById("div1").style.display="none";
+}
+
+</script>
+
+</div>
+    <!-- ---------------------------------------- -->
+    <script>
+      $('input').on('change', function() {
+        $('body').toggleClass('background');
+      });
+    </script>
+
+</body>
+</html> 
